@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Domains\Identity\Models;
 
+use App\Domains\Core\Models\Category;
+use App\Domains\Support\Models\Ticket;
 use Database\Factories\BusinessUnitFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

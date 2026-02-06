@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Domains\Identity\Models\Status;
+use App\Domains\Core\Models\Status;
 use Illuminate\Database\Seeder;
 
 class StatusSeeder extends Seeder

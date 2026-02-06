@@ -2,8 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Domains\Identity\Models;
+namespace App\Domains\Support\Models;
 
+use App\Domains\Core\Models\Category;
+use App\Domains\Core\Models\Priority;
+use App\Domains\Core\Models\Status;
+use App\Domains\Identity\Models\BusinessUnit;
+use App\Domains\Identity\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;

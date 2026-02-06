@@ -2,8 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Domains\Identity\Models;
+namespace App\Domains\Core\Models;
 
+use App\Domains\Identity\Models\BusinessUnit;
+use App\Domains\Support\Models\Ticket;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;

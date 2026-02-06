@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Domains\Identity\Models;
+namespace App\Domains\Support\Models;
 
+use App\Domains\Identity\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 

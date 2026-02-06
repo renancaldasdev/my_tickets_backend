@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Domains\Identity\Models\Priority;
+use App\Domains\Core\Models\Priority;
 use Illuminate\Database\Seeder;
 
 class PrioritySeeder extends Seeder
