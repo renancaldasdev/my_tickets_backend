@@ -7,7 +7,7 @@ namespace App\Domains\Core\Repositories;
 use App\Domains\Core\Interfaces\StatusRepositoryInterface;
 use App\Domains\Core\Models\Status;
 
-class StatusRepository implements StatusRepositoryInterface
+class StatusRepository extends BaseRepository implements StatusRepositoryInterface
 {
     protected $model = Status::class;
 }

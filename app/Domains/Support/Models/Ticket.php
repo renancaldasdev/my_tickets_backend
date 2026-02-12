@@ -8,6 +8,7 @@ use App\Domains\Core\Models\Category;
 use App\Domains\Core\Models\Priority;
 use App\Domains\Core\Models\Status;
 use App\Domains\Identity\Models\BusinessUnit;
+use App\Domains\Identity\Models\Customer;
 use App\Domains\Identity\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -22,6 +23,7 @@ class Ticket extends Model
         'priority_id',
         'business_unit_id',
         'category_id',
+        'customer_id',
         'user_id',
         'agent_id',
         'resolved_at',
@@ -34,6 +36,11 @@ class Ticket extends Model
     public function status(): BelongsTo
     {
         return $this->belongsTo(Status::class);
+    }
+
+    public function customer(): BelongsTo
+    {
+        return $this->belongsTo(Customer::class);
     }
 
     public function priority(): BelongsTo

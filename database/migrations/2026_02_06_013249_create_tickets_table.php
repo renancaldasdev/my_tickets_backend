@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreignId('priority_id')->constrained('priorities');
             $table->foreignId('business_unit_id')->constrained('business_units');
             $table->foreignId('category_id')->constrained('categories');
+            $table->foreignId('customer_id')->constrained('customers');
 
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('agent_id')->nullable()->constrained('users');

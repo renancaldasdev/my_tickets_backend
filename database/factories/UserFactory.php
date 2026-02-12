@@ -2,15 +2,16 @@
 
 namespace Database\Factories;
 
-use App\Domains\Identity\Models\BusinessUnit as ModelsBusinessUnit;
-use App\Domains\Identity\Models\User as ModelsUser;
+use App\Domains\Identity\Models\BusinessUnit;
+use App\Domains\Identity\Models\Customer;
+use App\Domains\Identity\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 class UserFactory extends Factory
 {
-    protected $model = ModelsUser::class;
+    protected $model = User::class;
 
     protected static ?string $password;
 
@@ -25,7 +26,8 @@ class UserFactory extends Factory
 
             'role' => 'client',
 
-            'business_unit_id' => ModelsBusinessUnit::factory(),
+            'business_unit_id' => BusinessUnit::factory(),
+            'customer_id' => Customer::factory(),
         ];
     }
 

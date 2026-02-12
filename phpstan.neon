@@ -5,10 +5,15 @@ includes:
 parameters:
 
     paths:
-        - app/
+        - app
+        - database/factories
+        - database/seeders
+    scanDirectories:
+        - app/Domains
 
     # Level 10 is the highest level
     level: 5
+
 
 #    ignoreErrors:
 #        - '#PHPDoc tag @var#'

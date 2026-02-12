@@ -3,21 +3,27 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
 
 class RoleAndPermissionSeeder extends Seeder
 {
     const VIEW_TICKETS = 'view tickets';
-    const CREATE_TICKETS = 'create tickets';
-    const EDIT_TICKETS = 'edit tickets';
-    const DELETE_TICKETS = 'delete tickets';
-    const ASSIGN_TICKETS = 'assign tickets';
-    const MANAGE_BUS = 'manage bus';
-    const MANAGE_USERS = 'manage users';
-    const GUARD_NAME = 'api';
 
+    const CREATE_TICKETS = 'create tickets';
+
+    const EDIT_TICKETS = 'edit tickets';
+
+    const DELETE_TICKETS = 'delete tickets';
+
+    const ASSIGN_TICKETS = 'assign tickets';
+
+    const MANAGE_BUS = 'manage bus';
+
+    const MANAGE_USERS = 'manage users';
+
+    const GUARD_NAME = 'api';
 
     public function run(): void
     {
@@ -33,7 +39,7 @@ class RoleAndPermissionSeeder extends Seeder
 
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
-        Role::create(['name' => 'super-admin', 'guard_name' => self::GUARD_NAME]);
+        Role::create(['name' => 'dev', 'guard_name' => self::GUARD_NAME]);
 
         $manager = Role::create(['name' => 'manager', 'guard_name' => self::GUARD_NAME]);
         $manager->givePermissionTo([
@@ -41,20 +47,21 @@ class RoleAndPermissionSeeder extends Seeder
             self::CREATE_TICKETS,
             self::EDIT_TICKETS,
             self::ASSIGN_TICKETS,
-            self::MANAGE_USERS
+            self::MANAGE_USERS,
+            self::MANAGE_BUS,
         ]);
 
         $agent = Role::create(['name' => 'agent', 'guard_name' => self::GUARD_NAME]);
         $agent->givePermissionTo([
             self::VIEW_TICKETS,
             self::CREATE_TICKETS,
-            self::EDIT_TICKETS
+            self::EDIT_TICKETS,
         ]);
 
         $user = Role::create(['name' => 'user', 'guard_name' => self::GUARD_NAME]);
         $user->givePermissionTo([
             self::VIEW_TICKETS,
-            self::CREATE_TICKETS
+            self::CREATE_TICKETS,
         ]);
     }
 }

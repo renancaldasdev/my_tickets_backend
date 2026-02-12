@@ -21,6 +21,8 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasApiTokens, HasFactory, HasRoles, Notifiable;
 
+    protected $guard_name = 'api';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -31,6 +33,7 @@ class User extends Authenticatable
         'email',
         'password',
         'business_unit_id',
+        'customer_id',
         'role',
     ];
 
@@ -60,6 +63,11 @@ class User extends Authenticatable
     protected static function newFactory()
     {
         return UserFactory::new();
+    }
+
+    public function customer(): BelongsTo
+    {
+        return $this->belongsTo(Customer::class);
     }
 
     public function businessUnit(): BelongsTo
