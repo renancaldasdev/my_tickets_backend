@@ -5,34 +5,39 @@ declare(strict_types=1);
 namespace App\Domains\Core\Repositories;
 
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * @template T of \Illuminate\Database\Eloquent\Model
  */
 abstract class BaseRepository
 {
-    /** @var T */
+    /**
+     * @var class-string<Model>
+     */
     protected $model;
 
     protected function applyTenantScope(): Builder
     {
-        $query = $this->model->newQuery();
-        $user = Auth::user();
+        $instance = new $this->model;
+        $query = $instance->newQuery();
+
+        $user = auth()->user();
 
         if ($user && $user->role === 'dev') {
             return $query;
         }
 
-        return $query->where('customer_id', $user->customer_id);
+        return $query->where('customer_id', $user?->customer_id);
     }
 
-    public function all()
+    public function all(): Collection
     {
         return $this->applyTenantScope()->get();
     }
 
-    public function find($id)
+    public function find($id): Model
     {
         return $this->applyTenantScope()->findOrFail($id);
     }

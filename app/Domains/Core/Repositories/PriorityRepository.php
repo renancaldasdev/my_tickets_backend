@@ -7,7 +7,7 @@ namespace App\Domains\Core\Repositories;
 use App\Domains\Core\Interfaces\PriorityRepositoryInterface;
 use App\Domains\Core\Models\Priority;
 
-class PriorityRepository implements PriorityRepositoryInterface
+class PriorityRepository extends BaseRepository implements PriorityRepositoryInterface
 {
     protected $model = Priority::class;
 }

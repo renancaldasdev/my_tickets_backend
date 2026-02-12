@@ -6,31 +6,31 @@ namespace App\Domains\Identity\Models;
 
 use App\Domains\Core\Models\Category;
 use App\Domains\Support\Models\Ticket;
-use Database\Factories\BusinessUnitFactory;
+use Database\Factories\CustomerFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class BusinessUnit extends Model
+class Customer extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'name',
-        'slug',
-        'is_active',
-        'customer_id',
+        'email',
+        'domain',
+        'document',
+        'logo',
     ];
 
-    protected static function newFactory(): BusinessUnitFactory
+    protected static function newFactory(): CustomerFactory
     {
-        return BusinessUnitFactory::new();
+        return CustomerFactory::new();
     }
 
-    public function customer(): BelongsTo
+    public function businessUnits(): HasMany
     {
-        return $this->belongsTo(Customer::class);
+        return $this->hasMany(BusinessUnit::class);
     }
 
     public function users(): HasMany

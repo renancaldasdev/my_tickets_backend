@@ -13,17 +13,12 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             RoleAndPermissionSeeder::class,
+            CustomerSeeder::class,
             BusinessUnitSeeder::class,
+            UserSeeder::class,
             StatusSeeder::class,
             PrioritySeeder::class,
             CategorySeeder::class,
-        ]);
-
-        \App\Domains\Identity\Models\User::factory()->create([
-            'name' => 'Admin Sistema',
-            'email' => 'admin@empresa.com',
-            'role' => 'admin',
-            'business_unit_id' => 1,
         ]);
     }
 }

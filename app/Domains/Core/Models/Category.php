@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domains\Core\Models;
 
 use App\Domains\Identity\Models\BusinessUnit;
+use App\Domains\Identity\Models\Customer;
 use App\Domains\Support\Models\Ticket;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -15,11 +16,21 @@ class Category extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['business_unit_id', 'name', 'description'];
+    protected $fillable = [
+        'business_unit_id',
+        'name',
+        'description',
+        'customer_id',
+    ];
 
     public function businessUnit(): BelongsTo
     {
         return $this->belongsTo(BusinessUnit::class);
+    }
+
+    public function customer(): BelongsTo
+    {
+        return $this->belongsTo(Customer::class);
     }
 
     public function tickets(): HasMany

@@ -13,9 +13,9 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-        $buTI = BusinessUnit::where('slug', 'suporte-ti')->first();
+        $buTI = BusinessUnit::with('customer')->where('slug', 'suporte-ti')->first();
 
-        if ($buTI) {
+        if ($buTI && $buTI->customer) {
             $categoriesTI = [
                 ['name' => 'Hardware', 'description' => 'Problemas com monitor, mouse, teclado, notebook.'],
                 ['name' => 'Software', 'description' => 'Instalação de programas, Office, VS Code.'],
@@ -25,6 +25,7 @@ class CategorySeeder extends Seeder
 
             foreach ($categoriesTI as $cat) {
                 Category::create([
+                    'customer_id' => $buTI->customer_id,
                     'business_unit_id' => $buTI->id,
                     'name' => $cat['name'],
                     'description' => $cat['description'],
@@ -32,9 +33,9 @@ class CategorySeeder extends Seeder
             }
         }
 
-        $buMatriz = BusinessUnit::where('slug', 'matriz-hq')->first();
+        $buMatriz = BusinessUnit::with('customer')->where('slug', 'matriz-hq')->first();
 
-        if ($buMatriz) {
+        if ($buMatriz && $buMatriz->customer) {
             $categoriesHQ = [
                 ['name' => 'Infraestrutura Predial', 'description' => 'Ar condicionado, iluminação, limpeza.'],
                 ['name' => 'Recursos Humanos', 'description' => 'Dúvidas de folha, benefícios, ponto.'],
@@ -43,6 +44,7 @@ class CategorySeeder extends Seeder
 
             foreach ($categoriesHQ as $cat) {
                 Category::create([
+                    'customer_id' => $buMatriz->customer_id,
                     'business_unit_id' => $buMatriz->id,
                     'name' => $cat['name'],
                     'description' => $cat['description'],

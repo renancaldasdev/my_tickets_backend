@@ -17,8 +17,9 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->foreignId('business_unit_id')->constrained('business_units');
-            $table->string('role')->default('client');
+            $table->foreignId('business_unit_id')->nullable()->constrained('business_units');
+            $table->foreignId('customer_id')->nullable()->constrained('customers')->onDelete('cascade');
+            $table->string('role')->default('user');
             $table->rememberToken();
             $table->timestamps();
         });
