@@ -35,7 +35,7 @@ class UserSeeder extends Seeder
             'email' => 'manager@alfa.com',
             'password' => $password,
             'customer_id' => $customer->id,
-            'business_unit_id' => $buMatriz->id,
+            'business_unit_id' => null,
             'role' => 'manager',
         ])->assignRole('manager');
 

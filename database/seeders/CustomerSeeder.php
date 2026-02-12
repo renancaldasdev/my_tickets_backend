@@ -13,7 +13,8 @@ class CustomerSeeder extends Seeder
     public function run(): void
     {
         $customer = Customer::create([
-            'name' => 'Empresa Alfa Tech',
+            'name' => 'Arnaldo',
+            'company_name' => 'Empresa Alfa Tech',
             'email' => 'contato@alfatech.com',
             'domain' => 'alfa.tickets.com',
             'document' => '12345678000199',
