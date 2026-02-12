@@ -22,12 +22,9 @@ class RegisterCustomerResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        // 1. Resolvemos o Customer e avisamos ao PHPStan quem ele é
         /** @var Customer|null $customer */
         $customer = $this->customer;
 
-        // 2. Agora que o PHPStan sabe que $customer é um Customer,
-        // ele aceita o acesso a ->businessUnits
         /** @var BusinessUnit|null $firstBu */
         $firstBu = $customer?->businessUnits->first();
 
