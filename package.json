@@ -18,7 +18,8 @@
     },
     "lint-staged": {
         "**/*.php": [
-            "vendor/bin/pint --preset laravel"
+            "vendor/bin/pint --preset laravel",
+            "vendor/bin/phpstan analyse --memory-limit=2G"
         ]
     }
 }
