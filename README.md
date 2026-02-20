@@ -1,59 +1,97 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🎫 My Tickets - Backend (API)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Este é o repositório backend do **My Tickets**, um sistema SaaS de chamados (Helpdesk/Ticketing) multi-tenant. A aplicação foi desenvolvida como uma API RESTful utilizando Laravel, desenhada para ser consumida por um frontend SPA (Single Page Application).
 
-## About Laravel
+## 🚀 Tecnologias e Ferramentas
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **Framework:** Laravel 11 (PHP 8.2+)
+- **Autenticação:** Laravel Sanctum (Autenticação baseada em Tokens para SPA)
+- **Controle de Acesso:** Spatie Laravel Permission (Roles e Permissions)
+- **Qualidade de Código:** PHPStan (Análise Estática Nível Máximo) + Husky (Pre-commit hooks)
+- **Testes de E-mail:** Mailtrap / Mailpit
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 🏗️ Arquitetura
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+O projeto segue princípios de **Clean Architecture** e **DDD (Domain-Driven Design)** para manter o código testável, escalável e de fácil manutenção:
 
-## Learning Laravel
+- **Domains:** Lógica agrupada por contexto de negócio (ex: `Identity` para Usuários, Tenants e Autenticação).
+- **Service Pattern:** Regras de negócio isoladas em classes de Serviço (`RegisterCustomerService`, `LoginService`).
+- **API Resources:** Formatação de payload de saída centralizada (`AuthUserResource`).
+- **Form Requests:** Validação rigorosa de dados de entrada.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+## ✨ Funcionalidades (Atuais)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Domínio de Identidade (Identity & Auth)
 
-## Laravel Sponsors
+- [x] **Registro de Tenant (SaaS):** Criação simultânea de Empresa (Customer), Unidade de Negócio (Matriz) e Usuário Admin (Manager).
+- [x] **Login / Logout:** Autenticação via Sanctum retornando token e dados formatados (incluindo permissões do usuário para a UI).
+- [x] **Recuperação de Senha:** Fluxo de "Esqueci minha senha" e "Reset" adaptado para apontar para rotas do Frontend (Vue.js).
+- [x] **Verificação de E-mail:** Envio e validação de links de confirmação de e-mail integrados com a SPA.
+- [x] **ACL (Controle de Acesso):** Perfis pré-configurados (`dev`, `manager`, `agent`, `user`) e interceptação global (`Gate::before`) para super-administradores.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## 🐳 Como rodar o projeto localmente (com Laravel Sail)
 
-### Premium Partners
+Este projeto utiliza o **Laravel Sail**, uma interface leve de linha de comando para interagir com o ambiente Docker padrão do Laravel.
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+1.  **Clone o repositório:**
 
-## Contributing
+    ```bash
+    git clone https://github.com/renancaldasdev/my_tickets_backend
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+    cd my-tickets-backend
+    ```
 
-## Code of Conduct
+2.  **Instal as dependências:**
+    ```bash
+    composer install
+    ```
+3.  **Configuração de ambiente:**
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+    Copie o arquivo .env.example para .env e configure suas variáveis (Banco de Dados, Mailtrap, e URL do Frontend):
 
-## Security Vulnerabilities
+    ```bash
+    cp .env.example .env
+    ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+4.  **Suba os containers do Sail:**
+    ```
+    ./vendor/bin/sail up -d
+    ```
+5.  **Gere a chave da aplicação e rode as migrações/seeders:**
 
-## License
+        Com os containers rodando, execute:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+    ```bash
+    ./vendor/bin/sail artisan key:generate
+
+    ./vendor/bin/sail artisan migrate --seed
+    ```
+
+## 💡 Dica de Uso do Sail
+
+Para não precisar digitar ./vendor/bin/sail toda vez, você pode criar um alias no seu terminal:
+
+```bash
+alias sail='sh $([ -f sail ] && echo sail || echo vendor/bin/sail)'
+```
+
+## 🔒 Qualidade de Código e Git Hooks
+
+Para garantir que o repositório se mantenha limpo e padronizado, utilizamos Husky integrado com PHPStan (nível máximo) e Laravel Pint.
+
+- Pre-commit Hook: Sempre que você executar um git commit, o Husky entrará em ação automaticamente. Ele formata o código (Pint) e roda a análise estática (PHPStan). Se o código não estiver no padrão ou tiver erros de tipagem, o commit será bloqueado até que você corrija os problemas.
+
+- Pre-push Hook: Antes de enviar o código para o GitHub (git push), o Husky roda a suíte de testes (Pest/PHPUnit) para garantir que as novas alterações não quebraram nenhuma funcionalidade existente.
+
+## Comandos úteis para análise manual (usando Sail):
+
+```bash
+# Rodar análise do PHPStan
+./vendor/bin/sail bin phpstan analyse --memory-limit=2G
+
+# Rodar formatação de código (Pint)
+./vendor/bin/sail bin pint
+
+# Rodar os testes
+./vendor/bin/sail artisan test
+```
