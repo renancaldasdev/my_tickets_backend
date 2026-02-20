@@ -13,7 +13,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 /**
  * @mixin User
  */
-class RegisterCustomerResource extends JsonResource
+class AuthUserResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -33,6 +33,7 @@ class RegisterCustomerResource extends JsonResource
             'name' => $this->name,
             'email' => $this->email,
             'role' => $this->role,
+            'permissions' => $this->getAllPermissions()->pluck('name'),
             'customer' => [
                 'name' => $customer->name ?? null,
                 'slug' => $firstBu?->slug,
