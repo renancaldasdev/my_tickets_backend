@@ -26,7 +26,6 @@ class UserSeeder extends Seeder
             'email' => 'dev@sistema.com',
             'password' => $password,
             'customer_id' => null,
-            'business_unit_id' => null,
             'role' => 'dev',
         ])->assignRole('dev');
 
@@ -35,26 +34,27 @@ class UserSeeder extends Seeder
             'email' => 'manager@alfa.com',
             'password' => $password,
             'customer_id' => $customer->id,
-            'business_unit_id' => null,
             'role' => 'manager',
         ])->assignRole('manager');
 
-        User::create([
+        $agent = User::create([
             'name' => 'Agente Suporte TI',
             'email' => 'agent@alfa.com',
             'password' => $password,
             'customer_id' => $customer->id,
-            'business_unit_id' => $buTI->id,
             'role' => 'agent',
-        ])->assignRole('agent');
+        ]);
+        $agent->assignRole('agent');
+        $agent->businessUnits()->attach($buTI->id);
 
-        User::create([
+        $cliente = User::create([
             'name' => 'João Cliente',
             'email' => 'cliente@alfa.com',
             'password' => $password,
             'customer_id' => $customer->id,
-            'business_unit_id' => $buMatriz->id,
             'role' => 'user',
-        ])->assignRole('user');
+        ]);
+        $cliente->assignRole('user');
+        $cliente->businessUnits()->attach($buMatriz->id);
     }
 }

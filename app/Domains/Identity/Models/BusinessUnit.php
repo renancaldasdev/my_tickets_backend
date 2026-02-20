@@ -23,6 +23,10 @@ class BusinessUnit extends Model
         'customer_id',
     ];
 
+    protected $attributes = [
+        'is_active' => true,
+    ];
+
     protected static function newFactory(): BusinessUnitFactory
     {
         return BusinessUnitFactory::new();
@@ -33,9 +37,9 @@ class BusinessUnit extends Model
         return $this->belongsTo(Customer::class);
     }
 
-    public function users(): HasMany
+    public function users()
     {
-        return $this->hasMany(User::class);
+        return $this->belongsToMany(User::class)->withTimestamps();
     }
 
     public function categories(): HasMany

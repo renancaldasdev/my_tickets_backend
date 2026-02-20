@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Api\Auth;
+namespace App\Http\Controllers\Api;
 
 use App\Domains\Identity\Models\User;
 use App\Domains\Identity\Services\ForgotPasswordService;
