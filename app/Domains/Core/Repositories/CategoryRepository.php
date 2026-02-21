@@ -10,4 +10,12 @@ use App\Domains\Core\Models\Category;
 class CategoryRepository extends BaseRepository implements CategoryRepositoryInterface
 {
     protected $model = Category::class;
+
+    public function create(array $data): Category
+    {
+        /** @var Category $category */
+        $category = $this->model::create($data);
+
+        return $category;
+    }
 }
