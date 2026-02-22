@@ -13,12 +13,15 @@ class CategoryResource extends JsonResource
         /** @var Category $category */
         $category = $this->resource;
 
+        $bu = new BusinessUnitResource($category->businessUnit);
+
         return [
             'id' => $category->uuid,
             'name' => $category->name,
             'description' => $category->description,
             'is_active' => $category->is_active,
-            'businessUnit' => clone $category->businessUnit,
+            'business_unit_name' => $bu->name,
+            'business_unit_slug' => $bu->slug,
         ];
     }
 }
