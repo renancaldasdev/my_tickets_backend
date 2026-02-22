@@ -23,7 +23,7 @@ class BusinessUnitController extends Controller
     {
         $manager = $request->user();
 
-        $businessUnits = $this->businessUnitService->listBusinessUnits($manager);
+        $businessUnits = $this->businessUnitService->listBusinessUnits();
 
         return BusinessUnitResource::collection($businessUnits);
     }

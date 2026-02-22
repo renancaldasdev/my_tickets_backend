@@ -10,5 +10,5 @@ use App\Domains\Identity\Models\User;
 
 class UserRepository extends BaseRepository implements UserRepositoryInterface
 {
-    protected $model = User::class;
+    protected string $model = User::class;
 }

@@ -9,5 +9,5 @@ use App\Domains\Core\Models\Priority;
 
 class PriorityRepository extends BaseRepository implements PriorityRepositoryInterface
 {
-    protected $model = Priority::class;
+    protected string $model = Priority::class;
 }

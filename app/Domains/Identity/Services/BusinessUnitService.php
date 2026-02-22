@@ -26,9 +26,9 @@ class BusinessUnitService
         return $this->businessUnitRepository->create($data);
     }
 
-    public function listBusinessUnits(User $manager)
+    public function listBusinessUnits()
     {
-        return $this->businessUnitRepository->getByCustomerId($manager->customer_id);
+        return $this->businessUnitRepository->all();
     }
 
     public function getBusinessUnit(string $slug, User $manager): BusinessUnit
@@ -44,15 +44,21 @@ class BusinessUnitService
             $data['slug'] = Str::slug($data['name'].'-'.$manager->customer_id);
         }
 
-        return $this->businessUnitRepository->update($businessUnit, $data);
+        /** @var BusinessUnit $updated */
+        $updated = $this->businessUnitRepository->update($businessUnit, $data);
+
+        return $updated;
     }
 
     public function deactivateBusinessUnit(string $slug, User $manager): BusinessUnit
     {
         $businessUnit = $this->businessUnitRepository->findBySlugAndCustomerId($slug, $manager->customer_id);
 
-        return $this->businessUnitRepository->update($businessUnit, [
+        /** @var BusinessUnit $deactivatedUnit */
+        $deactivatedUnit = $this->businessUnitRepository->update($businessUnit, [
             'is_active' => false,
         ]);
+
+        return $deactivatedUnit;
     }
 }
