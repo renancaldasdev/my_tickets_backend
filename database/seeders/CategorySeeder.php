@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Domains\Core\Models\Category;
 use App\Domains\Identity\Models\BusinessUnit;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class CategorySeeder extends Seeder
 {
@@ -25,6 +26,7 @@ class CategorySeeder extends Seeder
 
             foreach ($categoriesTI as $cat) {
                 Category::create([
+                    'uuid' => Str::uuid(),
                     'customer_id' => $buTI->customer_id,
                     'business_unit_id' => $buTI->id,
                     'name' => $cat['name'],
@@ -44,6 +46,7 @@ class CategorySeeder extends Seeder
 
             foreach ($categoriesHQ as $cat) {
                 Category::create([
+                    'uuid' => Str::uuid(),
                     'customer_id' => $buMatriz->customer_id,
                     'business_unit_id' => $buMatriz->id,
                     'name' => $cat['name'],

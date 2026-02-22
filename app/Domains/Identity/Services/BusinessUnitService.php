@@ -7,6 +7,7 @@ namespace App\Domains\Identity\Services;
 use App\Domains\Identity\Interfaces\BusinessUnitRepositoryInterface;
 use App\Domains\Identity\Models\BusinessUnit;
 use App\Domains\Identity\Models\User;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
 class BusinessUnitService
@@ -26,7 +27,7 @@ class BusinessUnitService
         return $this->businessUnitRepository->create($data);
     }
 
-    public function listBusinessUnits()
+    public function listBusinessUnits(): Collection
     {
         return $this->businessUnitRepository->all();
     }

@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * @template TModel of Model
+ * @template TModel of \Illuminate\Database\Eloquent\Model
  *
  * @implements BaseRepositoryInterface<TModel>
  */
@@ -41,6 +41,9 @@ abstract class BaseRepository implements BaseRepositoryInterface
         return $model;
     }
 
+    /**
+     * @return Builder<TModel>
+     */
     protected function applyTenantScope(): Builder
     {
         $query = $this->model::query();
@@ -48,14 +51,19 @@ abstract class BaseRepository implements BaseRepositoryInterface
         $user = auth()->user();
 
         if (! $user) {
+            /** @var Builder<TModel> */
             return $query;
         }
 
         if ($user->role === 'dev') {
+            /** @var Builder<TModel> */
             return $query;
         }
 
-        return $query->where('customer_id', $user->customer_id);
+        /** @var Builder<TModel> $scopedQuery */
+        $scopedQuery = $query->where('customer_id', $user->customer_id);
+
+        return $scopedQuery;
     }
 
     /**
@@ -69,13 +77,30 @@ abstract class BaseRepository implements BaseRepositoryInterface
         return $collection;
     }
 
+    /**
+     * @return Collection<int, TModel>
+     */
     public function all(): Collection
     {
-        return $this->applyTenantScope()->get();
+        /** @var Collection<int, TModel> $results */
+        $results = $this->applyTenantScope()->get();
+
+        return $results;
     }
 
     public function find($id): Model
     {
         return $this->applyTenantScope()->findOrFail($id);
+    }
+
+    /**
+     * @return TModel
+     */
+    public function findByUuid(string $uuid): Model
+    {
+        /** @var TModel $result */
+        $result = $this->applyTenantScope()->where('uuid', $uuid)->firstOrFail();
+
+        return $result;
     }
 }

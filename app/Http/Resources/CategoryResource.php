@@ -2,25 +2,23 @@
 
 namespace App\Http\Resources;
 
+use App\Domains\Core\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-/**
- * @mixin \App\Domains\Core\Models\Category
- */
 class CategoryResource extends JsonResource
 {
-    /**
-     * Transform the resource into an array.
-     *
-     * @return array<string, mixed>
-     */
     public function toArray(Request $request): array
     {
+        /** @var Category $category */
+        $category = $this->resource;
+
         return [
-            'id' => $this->id,
-            'name' => $this->name,
-            'description' => $this->description,
+            'id' => $category->uuid,
+            'name' => $category->name,
+            'description' => $category->description,
+            'is_active' => $category->is_active,
+            'businessUnit' => clone $category->businessUnit,
         ];
     }
 }

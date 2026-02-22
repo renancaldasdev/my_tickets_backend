@@ -19,10 +19,8 @@ class BusinessUnitController extends Controller
         protected BusinessUnitService $businessUnitService
     ) {}
 
-    public function index(Request $request): AnonymousResourceCollection
+    public function index(): AnonymousResourceCollection
     {
-        $manager = $request->user();
-
         $businessUnits = $this->businessUnitService->listBusinessUnits();
 
         return BusinessUnitResource::collection($businessUnits);
