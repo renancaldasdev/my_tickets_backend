@@ -31,7 +31,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'password',
-        'business_unit_id',
         'customer_id',
         'role',
     ];
@@ -69,9 +68,9 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsTo(Customer::class);
     }
 
-    public function businessUnit(): BelongsTo
+    public function businessUnits()
     {
-        return $this->belongsTo(BusinessUnit::class);
+        return $this->belongsToMany(BusinessUnit::class)->withTimestamps();
     }
 
     public function ticketsCreated(): HasMany

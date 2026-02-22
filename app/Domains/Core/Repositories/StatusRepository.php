@@ -9,5 +9,5 @@ use App\Domains\Core\Models\Status;
 
 class StatusRepository extends BaseRepository implements StatusRepositoryInterface
 {
-    protected $model = Status::class;
+    protected string $model = Status::class;
 }
