@@ -20,8 +20,11 @@ class CategoryResource extends JsonResource
             'name' => $category->name,
             'description' => $category->description,
             'is_active' => $category->is_active,
-            'business_unit_name' => $bu->name,
-            'business_unit_slug' => $bu->slug,
+            'business_unit' => [
+                'business_unit_name' => $bu->name,
+                'business_unit_slug' => $bu->slug,
+            ],
+
         ];
     }
 }
