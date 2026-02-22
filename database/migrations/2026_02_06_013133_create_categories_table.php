@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->foreignId('customer_id')->constrained('customers')->onDelete('cascade');
             $table->string('description')->nullable();
+            $table->unique(['business_unit_id', 'name']);
             $table->timestamps();
         });
     }

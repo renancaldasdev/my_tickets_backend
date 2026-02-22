@@ -10,5 +10,15 @@ use App\Domains\Identity\Models\BusinessUnit;
 
 class BusinessUnitRepository extends BaseRepository implements BusinessUnitRepositoryInterface
 {
-    protected $model = BusinessUnit::class;
+    protected string $model = BusinessUnit::class;
+
+    public function findBySlugAndCustomerId(string $slug, int $customerId): BusinessUnit
+    {
+        /** @var BusinessUnit $businessUnit */
+        $businessUnit = $this->model::where('slug', $slug)
+            ->where('customer_id', $customerId)
+            ->firstOrFail();
+
+        return $businessUnit;
+    }
 }
