@@ -94,9 +94,9 @@ class AuthController extends Controller
         ]);
     }
 
-    public function verifyEmail(string $id, string $hash): JsonResponse
+    public function verifyEmail(string $uuid, string $hash): JsonResponse
     {
-        $this->verifyEmailService->handle((int) $id, $hash);
+        $this->verifyEmailService->handle($uuid, $hash);
 
         return response()->json([
             'type' => 'success',

@@ -13,3 +13,6 @@ Route::prefix('business-units')
 
 Route::prefix('categories')
     ->group(base_path('routes/category.php'));
+
+Route::prefix('users')
+    ->group(base_path('routes/user.php'));
