@@ -6,6 +6,7 @@ namespace App\Domains\Identity\Services;
 
 use App\Domains\Identity\Interfaces\UserRepositoryInterface;
 use App\Domains\Identity\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Hash;
 
@@ -33,6 +34,8 @@ class UserService
 
         /** @var User $user */
         $user = $this->userRepository->create($data);
+
+        event(new Registered($user));
 
         return $user;
     }

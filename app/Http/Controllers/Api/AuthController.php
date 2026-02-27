@@ -18,6 +18,7 @@ use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterCustomerRequest;
 use App\Http\Requests\ResetPasswordRequest;
 use App\Http\Resources\AuthUserResource;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -36,6 +37,8 @@ class AuthController extends Controller
     public function register(RegisterCustomerRequest $request): JsonResponse
     {
         $result = $this->registerService->handle($request->validated());
+
+        event(new Registered($result['user']));
 
         return response()->json([
             'type' => 'success',
@@ -94,9 +97,9 @@ class AuthController extends Controller
         ]);
     }
 
-    public function verifyEmail(string $id, string $hash): JsonResponse
+    public function verifyEmail(string $uuid, string $hash): JsonResponse
     {
-        $this->verifyEmailService->handle((int) $id, $hash);
+        $this->verifyEmailService->handle($uuid, $hash);
 
         return response()->json([
             'type' => 'success',

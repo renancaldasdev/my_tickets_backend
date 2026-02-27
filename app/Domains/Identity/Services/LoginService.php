@@ -24,6 +24,12 @@ class LoginService
             ]);
         }
 
+        if (! $user->hasVerifiedEmail()) {
+            throw ValidationException::withMessages([
+                'email' => ['Por favor, verifique seu endereço de e-mail antes de fazer login. Verifique sua caixa de entrada ou spam.'],
+            ]);
+        }
+
         return [
             'user' => $user,
             'token' => $user->createToken('auth_token')->plainTextToken,
