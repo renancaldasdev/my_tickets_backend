@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domains\Identity\Services;
 
+use App\Domains\Identity\Jobs\SendVerificationEmailJob;
 use App\Domains\Identity\Models\BusinessUnit;
 use App\Domains\Identity\Models\Customer;
 use App\Domains\Identity\Models\User;
@@ -44,6 +45,8 @@ class RegisterCustomerService
                 'role' => 'manager',
             ]);
             $user->assignRole('manager');
+
+            SendVerificationEmailJob::dispatch($user);
 
             return [
                 'user' => $user,
