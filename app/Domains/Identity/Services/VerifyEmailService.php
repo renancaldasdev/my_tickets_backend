@@ -10,10 +10,10 @@ use Illuminate\Validation\ValidationException;
 
 class VerifyEmailService
 {
-    public function handle(int $userId, string $hash): void
+    public function handle(string $uuid, string $hash): void
     {
         /** @var User $user */
-        $user = User::findOrFail($userId);
+        $user = User::where('uuid', $uuid)->first();
 
         if (! hash_equals((string) $hash, sha1($user->getEmailForVerification()))) {
             throw ValidationException::withMessages([

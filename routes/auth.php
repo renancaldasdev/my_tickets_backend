@@ -9,7 +9,7 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
 Route::post('/reset-password', [AuthController::class, 'resetPassword']);
 
-Route::post('/email/verify/{id}/{hash}', [AuthController::class, 'verifyEmail'])
+Route::post('/email/verify/{uuid}/{hash}', [AuthController::class, 'verifyEmail'])
     ->name('verification.verify');
 
 Route::middleware('auth:sanctum')->group(function () {

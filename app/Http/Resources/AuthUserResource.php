@@ -29,7 +29,7 @@ class AuthUserResource extends JsonResource
         $firstBu = $customer?->businessUnits->first();
 
         return [
-            'id' => $this->id,
+            'id' => $this->uuid,
             'name' => $this->name,
             'email' => $this->email,
             'role' => $this->role,
