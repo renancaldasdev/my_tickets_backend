@@ -7,6 +7,7 @@ namespace App\Domains\Support\Models;
 use App\Domains\Core\Models\Category;
 use App\Domains\Core\Models\Priority;
 use App\Domains\Core\Models\Status;
+use App\Domains\Core\Traits\HasTenantScope;
 use App\Domains\Identity\Models\BusinessUnit;
 use App\Domains\Identity\Models\Customer;
 use App\Domains\Identity\Models\User;
@@ -16,6 +17,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Ticket extends Model
 {
+    use HasTenantScope;
+
     protected $fillable = [
         'subject',
         'description',

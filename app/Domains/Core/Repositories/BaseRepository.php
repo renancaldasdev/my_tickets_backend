@@ -42,39 +42,11 @@ abstract class BaseRepository implements BaseRepositoryInterface
     }
 
     /**
-     * @return Builder<TModel>
+     * @param  TModel  $model
      */
-    protected function applyTenantScope(): Builder
+    public function delete(Model $model): bool
     {
-        $query = $this->model::query();
-
-        $user = auth()->user();
-
-        if (! $user) {
-            /** @var Builder<TModel> */
-            return $query;
-        }
-
-        if ($user->role === 'dev') {
-            /** @var Builder<TModel> */
-            return $query;
-        }
-
-        /** @var Builder<TModel> $scopedQuery */
-        $scopedQuery = $query->where('customer_id', $user->customer_id);
-
-        return $scopedQuery;
-    }
-
-    /**
-     * @return Collection<int, TModel>
-     */
-    public function getByCustomerId(int $customerId): Collection
-    {
-        /** @var Collection<int, TModel> $collection */
-        $collection = $this->model::where('customer_id', $customerId)->get();
-
-        return $collection;
+        return (bool) $model->delete();
     }
 
     /**
@@ -83,14 +55,32 @@ abstract class BaseRepository implements BaseRepositoryInterface
     public function all(): Collection
     {
         /** @var Collection<int, TModel> $results */
-        $results = $this->applyTenantScope()->get();
+        $results = $this->query()->get();
 
         return $results;
     }
 
-    public function find($id): Model
+    /**
+     * @param  array<string, mixed>  $criteria
+     * @return Collection<int, TModel>
+     */
+    public function allWhere(array $criteria): Collection
     {
-        return $this->applyTenantScope()->findOrFail($id);
+        /** @var Collection<int, TModel> $results */
+        $results = $this->query()->where($criteria)->get();
+
+        return $results;
+    }
+
+    /**
+     * @return TModel
+     */
+    public function find(int $id): Model
+    {
+        /** @var TModel $result */
+        $result = $this->query()->findOrFail($id);
+
+        return $result;
     }
 
     /**
@@ -99,8 +89,13 @@ abstract class BaseRepository implements BaseRepositoryInterface
     public function findByUuid(string $uuid): Model
     {
         /** @var TModel $result */
-        $result = $this->applyTenantScope()->where('uuid', $uuid)->firstOrFail();
+        $result = $this->query()->where('uuid', $uuid)->firstOrFail();
 
         return $result;
+    }
+
+    protected function query(): Builder
+    {
+        return $this->model::query();
     }
 }

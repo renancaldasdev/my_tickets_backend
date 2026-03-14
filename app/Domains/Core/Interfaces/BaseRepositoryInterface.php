@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 interface BaseRepositoryInterface
 {
     /**
+     * @param  array<string, mixed>  $data
      * @return TModel
      */
     public function create(array $data): Model;
@@ -25,9 +26,9 @@ interface BaseRepositoryInterface
     public function update(Model $model, array $data): Model;
 
     /**
-     * @return Collection<int, TModel>
+     * @param  TModel  $model
      */
-    public function getByCustomerId(int $customerId): Collection;
+    public function delete(Model $model): bool;
 
     /**
      * @return Collection<int, TModel>
@@ -35,10 +36,15 @@ interface BaseRepositoryInterface
     public function all(): Collection;
 
     /**
-     * @param  mixed  $id
+     * @param  array<string, mixed>  $criteria
+     * @return Collection<int, TModel>
+     */
+    public function allWhere(array $criteria): Collection;
+
+    /**
      * @return TModel
      */
-    public function find($id): Model;
+    public function find(int $id): Model;
 
     /**
      * @return TModel

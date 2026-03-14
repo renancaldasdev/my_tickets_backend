@@ -14,9 +14,9 @@ use App\Domains\Identity\Interfaces\BusinessUnitRepositoryInterface;
 use App\Domains\Identity\Interfaces\UserRepositoryInterface;
 use App\Domains\Identity\Repositories\BusinessUnitRepository;
 use App\Domains\Identity\Repositories\UserRepository;
-use App\Domains\Support\Interfaces\TicketInterationRepositoryInterface;
+use App\Domains\Support\Interfaces\TicketInteractionRepositoryInterface;
 use App\Domains\Support\Interfaces\TicketRepositoryInterface;
-use App\Domains\Support\Repositories\TicketInterationRepository;
+use App\Domains\Support\Repositories\TicketInteractionRepository;
 use App\Domains\Support\Repositories\TicketRepository;
 use Illuminate\Support\ServiceProvider;
 
@@ -27,7 +27,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
         $this->app->bind(BusinessUnitRepositoryInterface::class, BusinessUnitRepository::class);
         $this->app->bind(TicketRepositoryInterface::class, TicketRepository::class);
-        $this->app->bind(TicketInterationRepositoryInterface::class, TicketInterationRepository::class);
+        $this->app->bind(TicketInteractionRepositoryInterface::class, TicketInteractionRepository::class);
         $this->app->bind(StatusRepositoryInterface::class, StatusRepository::class);
         $this->app->bind(PriorityRepositoryInterface::class, PriorityRepository::class);
         $this->app->bind(CategoryRepositoryInterface::class, CategoryRepository::class);
