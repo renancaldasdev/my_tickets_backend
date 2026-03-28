@@ -20,6 +20,7 @@ class Ticket extends Model
     use HasTenantScope;
 
     protected $fillable = [
+        'uuid',
         'subject',
         'description',
         'status_id',
