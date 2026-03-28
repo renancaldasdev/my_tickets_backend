@@ -20,8 +20,6 @@ class TicketPolicy
         }
 
         if ($user->hasRole('agent')) {
-            // $user->businessUnits resolve via @property-read no User (Collection<int, BusinessUnit>)
-            // contains() é método de Illuminate\Database\Eloquent\Collection
             return $user->businessUnits->contains('id', $ticket->business_unit_id);
         }
 

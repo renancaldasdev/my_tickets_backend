@@ -41,7 +41,6 @@ class AuthController extends Controller
             'type' => 'success',
             'message' => 'Cadastro realizado com sucesso!',
             'data' => [
-                'token' => $result['token'],
                 'user' => new AuthUserResource($result['user']),
             ],
         ], 201);

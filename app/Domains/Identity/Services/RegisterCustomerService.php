@@ -8,7 +8,7 @@ use App\Domains\Identity\Jobs\SendVerificationEmailJob;
 use App\Domains\Identity\Models\BusinessUnit;
 use App\Domains\Identity\Models\Customer;
 use App\Domains\Identity\Models\User;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany; // <-- OBRIGATÓRIO para o @var
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -17,7 +17,7 @@ class RegisterCustomerService
 {
     /**
      * @param  array<string, mixed>  $data
-     * @return array{user: User, customer: Customer, token: string}
+     * @return array{user: User, customer: Customer}
      */
     public function handle(array $data): array
     {
@@ -60,7 +60,6 @@ class RegisterCustomerService
             return [
                 'user' => $user,
                 'customer' => $customer,
-                'token' => $user->createToken('auth_token')->plainTextToken,
             ];
         });
     }

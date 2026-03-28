@@ -11,4 +11,5 @@ Route::prefix('v1')->group(function () {
     Route::prefix('business-units')->group(base_path('routes/businessUnit.php'));
     Route::prefix('categories')->group(base_path('routes/category.php'));
     Route::prefix('users')->group(base_path('routes/user.php'));
+    Route::prefix('tickets')->group(base_path('routes/ticket.php'));
 });
