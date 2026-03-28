@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace App\Domains\Identity\Models;
 
+use App\Domains\Core\Traits\HasTenantScope;
 use App\Domains\Support\Models\Ticket;
 use Database\Factories\UserFactory;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Collection;         // <-- OBRIGATÓRIO para @property-read
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -16,18 +19,30 @@ use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
+/**
+ * @property int $id
+ * @property string $uuid
+ * @property string $name
+ * @property string $email
+ * @property string $role
+ * @property int|null $customer_id
+ * @property bool $is_active
+ * @property \Illuminate\Support\Carbon|null $email_verified_at
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read Customer|null                 $customer
+ * @property-read Collection<int, BusinessUnit> $businessUnits
+ * @property-read Collection<int, Ticket>       $ticketsCreated
+ * @property-read Collection<int, Ticket>       $ticketsAssigned
+ */
 class User extends Authenticatable implements MustVerifyEmail
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasApiTokens, HasFactory, HasRoles, Notifiable;
+    /** @use HasFactory<UserFactory> */
+    use HasApiTokens, HasFactory, HasRoles, HasTenantScope, Notifiable;
 
     protected $guard_name = 'api';
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
+    /** @var list<string> */
     protected $fillable = [
         'name',
         'email',
@@ -41,21 +56,13 @@ class User extends Authenticatable implements MustVerifyEmail
         'is_active' => true,
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
+    /** @var list<string> */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
+    /** @return array<string, string> */
     protected function casts(): array
     {
         return [
@@ -74,26 +81,30 @@ class User extends Authenticatable implements MustVerifyEmail
         });
     }
 
-    protected static function newFactory()
+    protected static function newFactory(): UserFactory
     {
         return UserFactory::new();
     }
 
+    /** @return BelongsTo<Customer, $this> */
     public function customer(): BelongsTo
     {
         return $this->belongsTo(Customer::class);
     }
 
-    public function businessUnits()
+    /** @return BelongsToMany<BusinessUnit, $this> */
+    public function businessUnits(): BelongsToMany
     {
         return $this->belongsToMany(BusinessUnit::class)->withTimestamps();
     }
 
+    /** @return HasMany<Ticket, $this> */
     public function ticketsCreated(): HasMany
     {
         return $this->hasMany(Ticket::class, 'user_id');
     }
 
+    /** @return HasMany<Ticket, $this> */
     public function ticketsAssigned(): HasMany
     {
         return $this->hasMany(Ticket::class, 'agent_id');

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Domains\Support\Policies;
 
 use App\Domains\Identity\Models\User;
@@ -18,7 +20,7 @@ class TicketPolicy
         }
 
         if ($user->hasRole('agent')) {
-            return $user->business_unit_id === $ticket->business_unit_id;
+            return $user->businessUnits->contains('id', $ticket->business_unit_id);
         }
 
         return $user->id === $ticket->user_id;

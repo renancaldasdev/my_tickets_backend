@@ -8,12 +8,17 @@ use App\Domains\Identity\Jobs\SendVerificationEmailJob;
 use App\Domains\Identity\Models\BusinessUnit;
 use App\Domains\Identity\Models\Customer;
 use App\Domains\Identity\Models\User;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 class RegisterCustomerService
 {
+    /**
+     * @param  array<string, mixed>  $data
+     * @return array{user: User, customer: Customer}
+     */
     public function handle(array $data): array
     {
         return DB::transaction(function () use ($data) {
@@ -41,17 +46,20 @@ class RegisterCustomerService
                 'email' => $data['email'],
                 'password' => Hash::make($data['password']),
                 'customer_id' => $customer->id,
-                'business_unit_id' => $defaultBU->id,
                 'role' => 'manager',
             ]);
+
             $user->assignRole('manager');
+
+            /** @var BelongsToMany<BusinessUnit, User> $buRelation */
+            $buRelation = $user->businessUnits();
+            $buRelation->attach($defaultBU->id);
 
             SendVerificationEmailJob::dispatch($user);
 
             return [
                 'user' => $user,
                 'customer' => $customer,
-                'token' => $user->createToken('auth_token')->plainTextToken,
             ];
         });
     }

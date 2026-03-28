@@ -24,25 +24,26 @@ class UserFactory extends Factory
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
 
-            'role' => 'client',
+            'role' => 'user',
 
             'business_unit_id' => BusinessUnit::factory(),
             'customer_id' => Customer::factory(),
         ];
     }
 
-    public function admin(): static
+    public function manager(): static   // ✅ renomeado de admin() para manager()
     {
-        return $this->state(fn (array $attributes) => [
-            'role' => 'admin',
-        ]);
+        return $this->state(['role' => 'manager']);
     }
 
     public function agent(): static
     {
-        return $this->state(fn (array $attributes) => [
-            'role' => 'agent',
-        ]);
+        return $this->state(['role' => 'agent']);
+    }
+
+    public function dev(): static
+    {
+        return $this->state(['role' => 'dev', 'customer_id' => null]);
     }
 
     public function unverified(): static

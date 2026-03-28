@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domains\Core\Models;
 
+use App\Domains\Core\Traits\HasTenantScope;
 use App\Domains\Identity\Models\BusinessUnit;
 use App\Domains\Identity\Models\Customer;
 use App\Domains\Support\Models\Ticket;
@@ -15,7 +16,7 @@ use Illuminate\Support\Str;
 
 class Category extends Model
 {
-    use HasFactory;
+    use HasFactory, HasTenantScope;
 
     protected $fillable = [
         'business_unit_id',

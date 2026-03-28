@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domains\Identity\Models;
 
 use App\Domains\Core\Models\Category;
+use App\Domains\Core\Traits\HasTenantScope;
 use App\Domains\Support\Models\Ticket;
 use Database\Factories\BusinessUnitFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,7 +15,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class BusinessUnit extends Model
 {
-    use HasFactory;
+    use HasFactory,HasTenantScope;
 
     protected $fillable = [
         'name',
